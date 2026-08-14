@@ -8,38 +8,53 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var checklistItems=[
+        "Walk the dog",
+        "Brush my teeth",
+        "Learn iOS development",
+        "Soccer practice",
+        "Eat ice cream",
+        "Take vocal lessons",
+        "Record hit single",
+        "Learn every martial art",
+        "Design costume",
+        "Save the world",
+        "Come up with superhero name",
+        "Befriend space raccoon",
+        "Star in blockbuster movie",
+    ]
+    
     var body: some View {
         NavigationView{
             List {
-                Section(header:Text("High priority")){
-                    Text("Walk the dog")
-                    Text("Brush my teeth")
-                    Text("Learn iOS development")
-                    Text("Make dinner")
-                    Text("Do laundry")
-                    Text("Pay bills")
-                    Text("Finish homework")
-                    Text("Change internet provider")
-                    Text("Read Raywenderlich.com")
-                    Text("Clean the kitchen")
-                    Text("Wash the car")
+                ForEach(checklistItems, id: \.self){item in
+                    Text(item)
                 }
-                Section(header:Text("Low priority")){
-                    Text("Soccer practice")
-                    Text("Eat ice cream")
-                    Text("Take vocal lessons")
-                    Text("Record hit single")
-                    Text("Learn every martial art")
-                    Text("Design costume")
-                    Text("Design crime-fighting vehicle")
-                    Text("Come up with superhero name")
-                    Text("Befriend space racoon")
-                    Text("Save the world")
-                }
+                .onDelete(perform: deleteListItem)
+                .onMove(perform: moveListItem)
             }
-            .listStyle(GroupedListStyle())
+            .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Checklist")
+            .onAppear(){
+                self.printChecklistContent()
+            }
         }
+    }
+    
+    func printChecklistContent(){
+        for item in checklistItems{
+            print(item)
+        }
+    }
+    
+    func deleteListItem(whichElement: IndexSet){
+        checklistItems.remove(atOffsets: whichElement)
+        printChecklistContent()
+    }
+    
+    func moveListItem(whichElement: IndexSet, destination:Int){
+        checklistItems.move(fromOffsets: whichElement, toOffset: destination)
+        printChecklistContent()
     }
 }
 
