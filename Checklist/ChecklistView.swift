@@ -18,14 +18,6 @@ struct ChecklistView: View {
             List {
                 ForEach(checklist.items){index in
                     RowView(checklistItem: self.$checklist.items[index])
-                    /*.background(Color.white)
-                    .onTapGesture {
-                        if let matchingIndex = self.checklist.items.firstIndex(where: {
-                            $0.id == item.id}){
-                            self.checklist.items[matchingIndex].isChecked.toggle()
-                        }
-                        self.checklist.printChecklistContent()
-                    }*/
                 }
                 .onDelete(perform: checklist.deleteListItem)
                 .onMove(perform: checklist.moveListItem)
@@ -43,7 +35,8 @@ struct ChecklistView: View {
             )
             .navigationBarTitle("Checklist", displayMode: .inline)
             .onAppear(){
-                self.checklist.printChecklistContent()
+                //self.checklist.printChecklistContent()
+                self.checklist.saveListItems()
             }
         }
         .sheet(isPresented: $newChecklistItemViewIsVisible){

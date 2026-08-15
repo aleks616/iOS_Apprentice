@@ -19,7 +19,8 @@ struct NewChecklistItemView: View {
                 Button(action:{
                     let newChecklistItem=ChecklistItem(name:self.newItemName)
                     self.checklist.items.append(newChecklistItem)
-                    self.checklist.printChecklistContent()
+                    //self.checklist.printChecklistContent()
+                    self.checklist.saveListItems()
                     self.presentationMode.wrappedValue.dismiss()
                 }){
                     HStack{
